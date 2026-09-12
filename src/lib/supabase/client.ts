@@ -4,7 +4,11 @@ import {
   supabasePublishableKey,
   supabaseUrl,
 } from "@/lib/supabase/config";
+import type { Database } from "@/types/database";
 
 export function createClient() {
-  return createBrowserClient(supabaseUrl, supabasePublishableKey);
+  return createBrowserClient<Database>(
+    supabaseUrl,
+    supabasePublishableKey,
+  );
 }

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Bell, PiggyBank, Plus } from "lucide-react";
+import Link from "next/link";
 
 const pageInformation: Record<
   string,
@@ -17,6 +18,10 @@ const pageInformation: Record<
   "/transactions": {
     title: "Transactions",
     description: "Review and manage your financial activity.",
+  },
+  "/transactions/new": {
+    title: "Add transaction",
+    description: "Record new income or spending.",
   },
   "/analytics": {
     title: "Analytics",
@@ -76,14 +81,14 @@ export function AppHeader() {
             <Bell aria-hidden="true" className="size-5" />
           </button>
 
-          <button
-            type="button"
+          <Link
+            href="/transactions/new"
             className="flex h-10 items-center gap-2 rounded-xl bg-emerald-600 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 sm:px-4"
           >
             <Plus aria-hidden="true" className="size-4" />
             <span className="hidden sm:inline">Add transaction</span>
             <span className="sm:hidden">Add</span>
-          </button>
+          </Link>
         </div>
       </div>
     </header>
