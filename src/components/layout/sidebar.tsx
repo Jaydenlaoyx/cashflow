@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ChartNoAxesCombined,
   LayoutDashboard,
@@ -43,7 +46,17 @@ const navigationItems = [
   },
 ];
 
+function isActiveRoute(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white lg:flex lg:flex-col">
       <div className="flex h-20 items-center gap-3 px-6">
@@ -61,15 +74,17 @@ export function Sidebar() {
 
       <nav aria-label="Main navigation" className="flex-1 px-3 py-5">
         <ul className="space-y-1">
-          {navigationItems.map((item, index) => {
+          {navigationItems.map((item) => {
             const Icon = item.icon;
+            const active = isActiveRoute(pathname, item.href);
 
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
-                    index === 0
+                    active
                       ? "bg-emerald-50 text-emerald-700"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
                   }`}
@@ -86,7 +101,12 @@ export function Sidebar() {
       <div className="border-t border-slate-200 p-3">
         <Link
           href="/settings"
-          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950"
+          aria-current={pathname === "/settings" ? "page" : undefined}
+          className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+            pathname === "/settings"
+              ? "bg-emerald-50 text-emerald-700"
+              : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+          }`}
         >
           <Settings aria-hidden="true" className="size-5" />
           Settings
