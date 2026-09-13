@@ -192,6 +192,81 @@ export type Database = {
         }
         Relationships: []
       }
+      recurring_transactions: {
+        Row: {
+          account_id: string
+          amount: number
+          category_id: string
+          created_at: string
+          description: string
+          end_date: string | null
+          frequency: Database["public"]["Enums"]["recurrence_frequency"]
+          id: string
+          is_active: boolean
+          last_generated_date: string | null
+          merchant: string | null
+          next_occurrence: string
+          notes: string | null
+          start_date: string
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          amount: number
+          category_id: string
+          created_at?: string
+          description: string
+          end_date?: string | null
+          frequency: Database["public"]["Enums"]["recurrence_frequency"]
+          id?: string
+          is_active?: boolean
+          last_generated_date?: string | null
+          merchant?: string | null
+          next_occurrence: string
+          notes?: string | null
+          start_date: string
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          category_id?: string
+          created_at?: string
+          description?: string
+          end_date?: string | null
+          frequency?: Database["public"]["Enums"]["recurrence_frequency"]
+          id?: string
+          is_active?: boolean
+          last_generated_date?: string | null
+          merchant?: string | null
+          next_occurrence?: string
+          notes?: string | null
+          start_date?: string
+          type?: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recurring_account_owner_fk"
+            columns: ["account_id", "user_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id", "user_id"]
+          },
+          {
+            foreignKeyName: "recurring_category_owner_fk"
+            columns: ["category_id", "user_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id", "user_id"]
+          },
+        ]
+      }
       savings_goals: {
         Row: {
           color: string
@@ -244,6 +319,8 @@ export type Database = {
           id: string
           merchant: string | null
           notes: string | null
+          recurrence_date: string | null
+          recurring_transaction_id: string | null
           transaction_date: string
           type: Database["public"]["Enums"]["transaction_type"]
           updated_at: string
@@ -258,6 +335,8 @@ export type Database = {
           id?: string
           merchant?: string | null
           notes?: string | null
+          recurrence_date?: string | null
+          recurring_transaction_id?: string | null
           transaction_date?: string
           type: Database["public"]["Enums"]["transaction_type"]
           updated_at?: string
@@ -272,6 +351,8 @@ export type Database = {
           id?: string
           merchant?: string | null
           notes?: string | null
+          recurrence_date?: string | null
+          recurring_transaction_id?: string | null
           transaction_date?: string
           type?: Database["public"]["Enums"]["transaction_type"]
           updated_at?: string
@@ -290,6 +371,13 @@ export type Database = {
             columns: ["category_id", "user_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id", "user_id"]
+          },
+          {
+            foreignKeyName: "transactions_recurring_owner_fk"
+            columns: ["recurring_transaction_id", "user_id"]
+            isOneToOne: false
+            referencedRelation: "recurring_transactions"
             referencedColumns: ["id", "user_id"]
           },
         ]
@@ -380,6 +468,7 @@ export type Database = {
         | "investment"
         | "other"
       budget_period: "monthly" | "yearly"
+      recurrence_frequency: "weekly" | "fortnightly" | "monthly" | "yearly"
       transaction_type: "income" | "expense"
     }
     CompositeTypes: {
@@ -517,6 +606,7 @@ export const Constants = {
         "other",
       ],
       budget_period: ["monthly", "yearly"],
+      recurrence_frequency: ["weekly", "fortnightly", "monthly", "yearly"],
       transaction_type: ["income", "expense"],
     },
   },
