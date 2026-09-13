@@ -1,6 +1,7 @@
 import {
   ArrowDownRight,
   ArrowUpRight,
+  Pencil,
   ReceiptText,
 } from "lucide-react";
 
@@ -8,6 +9,9 @@ import {
   formatCurrency,
   formatTransactionDate,
 } from "@/lib/finance/format";
+
+import Link from "next/link";
+import { DeleteTransactionButton } from "@/components/transactions/delete-transaction-button";
 
 export type TransactionListItem = {
   id: string;
@@ -99,6 +103,9 @@ export function TransactionList({
               <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
                 Amount
               </th>
+              <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Actions
+              </th>
             </tr>
           </thead>
 
@@ -162,6 +169,25 @@ export function TransactionList({
                       Number(transaction.amount),
                       currencyCode,
                     )}
+                  </td>
+
+                  <td className="px-5 py-4">
+                    <div className="flex justify-end gap-1">
+                      <Link
+                        href={`/transactions/${transaction.id}/edit`}
+                        aria-label={`Edit ${transaction.description}`}
+                        title="Edit transaction"
+                        className="flex size-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-700"
+                      >
+                        <Pencil aria-hidden="true" className="size-4" />
+                      </Link>
+
+                      <DeleteTransactionButton
+                        transactionId={transaction.id}
+                        description={transaction.description}
+                        compact
+                      />
+                    </div>
                   </td>
                 </tr>
               );
@@ -231,6 +257,21 @@ export function TransactionList({
                     </span>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-4 flex justify-end gap-2 border-t border-slate-100 pt-3">
+                <Link
+                  href={`/transactions/${transaction.id}/edit`}
+                  className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+                >
+                  <Pencil aria-hidden="true" className="size-4" />
+                  Edit
+                </Link>
+
+                <DeleteTransactionButton
+                  transactionId={transaction.id}
+                  description={transaction.description}
+                />
               </div>
             </article>
           );

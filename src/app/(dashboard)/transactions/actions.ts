@@ -151,3 +151,165 @@ export async function createTransaction(
 
   redirect("/transactions?created=true");
 }
+
+export async function updateTransaction(
+  transactionId: string,
+  _previousState: TransactionActionState,
+  formData: FormData,
+): Promise<TransactionActionState> {
+  const idResult = z.string().uuid().safeParse(transactionId);
+
+  if (!idResult.success) {
+    return {
+      error: "The transaction ID is invalid.",
+    };
+  }
+
+  const parsedTransaction = transactionSchema.safeParse({
+    type: formData.get("type"),
+    accountId: formData.get("accountId"),
+    categoryId: formData.get("categoryId"),
+    amount: formData.get("amount"),
+    description: formData.get("description"),
+    merchant: formData.get("merchant") ?? "",
+    transactionDate: formData.get("transactionDate"),
+    notes: formData.get("notes") ?? "",
+  });
+
+  if (!parsedTransaction.success) {
+    return {
+      error: "Please correct the highlighted fields.",
+      fieldErrors: parsedTransaction.error.flatten().fieldErrors,
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data: claimsData, error: claimsError } =
+    await supabase.auth.getClaims();
+
+  const userId = claimsData?.claims?.sub;
+
+  if (claimsError || typeof userId !== "string") {
+    return {
+      error: "Your session has expired. Please log in again.",
+    };
+  }
+
+  const transaction = parsedTransaction.data;
+
+  const [
+    { data: existingTransaction, error: transactionError },
+    { data: account, error: accountError },
+    { data: category, error: categoryError },
+  ] = await Promise.all([
+    supabase
+      .from("transactions")
+      .select("id")
+      .eq("id", transactionId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+
+    supabase
+      .from("accounts")
+      .select("id")
+      .eq("id", transaction.accountId)
+      .eq("user_id", userId)
+      .eq("is_archived", false)
+      .maybeSingle(),
+
+    supabase
+      .from("categories")
+      .select("id, type")
+      .eq("id", transaction.categoryId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+  ]);
+
+  if (transactionError || !existingTransaction) {
+    return {
+      error: "The transaction no longer exists.",
+    };
+  }
+
+  if (accountError || !account) {
+    return {
+      error: "The selected account is unavailable.",
+    };
+  }
+
+  if (categoryError || !category) {
+    return {
+      error: "The selected category is unavailable.",
+    };
+  }
+
+  if (category.type !== transaction.type) {
+    return {
+      error: "The selected category does not match the transaction type.",
+    };
+  }
+
+  const { error: updateError } = await supabase
+    .from("transactions")
+    .update({
+      account_id: transaction.accountId,
+      category_id: transaction.categoryId,
+      type: transaction.type,
+      amount: transaction.amount,
+      description: transaction.description,
+      merchant: transaction.merchant || null,
+      transaction_date: transaction.transactionDate,
+      notes: transaction.notes || null,
+    })
+    .eq("id", transactionId)
+    .eq("user_id", userId);
+
+  if (updateError) {
+    console.error("Transaction update failed:", updateError.message);
+
+    return {
+      error: "We couldn’t update the transaction. Please try again.",
+    };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/transactions");
+
+  redirect("/transactions?updated=true");
+}
+
+export async function deleteTransaction(transactionId: string) {
+  const idResult = z.string().uuid().safeParse(transactionId);
+
+  if (!idResult.success) {
+    redirect("/transactions?error=invalid-transaction");
+  }
+
+  const supabase = await createClient();
+
+  const { data: claimsData, error: claimsError } =
+    await supabase.auth.getClaims();
+
+  const userId = claimsData?.claims?.sub;
+
+  if (claimsError || typeof userId !== "string") {
+    redirect("/login");
+  }
+
+  const { error } = await supabase
+    .from("transactions")
+    .delete()
+    .eq("id", transactionId)
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Transaction deletion failed:", error.message);
+    redirect("/transactions?error=delete-failed");
+  }
+
+  revalidatePath("/");
+  revalidatePath("/transactions");
+
+  redirect("/transactions?deleted=true");
+}

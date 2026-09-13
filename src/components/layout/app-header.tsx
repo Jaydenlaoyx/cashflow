@@ -48,10 +48,18 @@ const pageInformation: Record<
 export function AppHeader() {
   const pathname = usePathname();
 
-  const currentPage = pageInformation[pathname] ?? {
-    title: "CashFlow",
-    description: "Manage your personal finances.",
-  };
+  const currentPage =
+    pageInformation[pathname] ??
+    (pathname.startsWith("/transactions/") &&
+    pathname.endsWith("/edit")
+      ? {
+          title: "Edit transaction",
+          description: "Update an existing financial record.",
+        }
+      : {
+          title: "CashFlow",
+          description: "Manage your personal finances.",
+        });
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/90 backdrop-blur">

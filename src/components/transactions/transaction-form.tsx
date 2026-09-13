@@ -7,6 +7,7 @@ import { ArrowDownRight, ArrowUpRight, LoaderCircle } from "lucide-react";
 import {
   createTransaction,
   type TransactionActionState,
+  updateTransaction
 } from "@/app/(dashboard)/transactions/actions";
 
 const initialTransactionState: TransactionActionState = {};
@@ -27,6 +28,19 @@ type TransactionFormProps = {
   accounts: AccountOption[];
   categories: CategoryOption[];
   today: string;
+  transaction?: ExistingTransaction;
+};
+
+type ExistingTransaction = {
+  id: string;
+  type: "income" | "expense";
+  amount: number;
+  description: string;
+  merchant: string | null;
+  transactionDate: string;
+  accountId: string;
+  categoryId: string;
+  notes: string | null;
 };
 
 function FieldError({ messages }: { messages?: string[] }) {
@@ -45,13 +59,20 @@ export function TransactionForm({
   accounts,
   categories,
   today,
+  transaction,
 }: TransactionFormProps) {
+  const editing = Boolean(transaction);
+
   const [transactionType, setTransactionType] = useState<
     "income" | "expense"
   >("expense");
 
+  const transactionAction = transaction
+    ? updateTransaction.bind(null, transaction.id)
+    : createTransaction;
+
   const [state, formAction, pending] = useActionState(
-    createTransaction,
+    transactionAction,
     initialTransactionState,
   );
 
@@ -143,6 +164,7 @@ export function TransactionForm({
               step="0.01"
               required
               placeholder="0.00"
+              defaultValue={transaction?.amount}
               className="h-11 w-full rounded-xl border border-slate-300 bg-white pl-8 pr-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
             />
           </div>
@@ -163,7 +185,7 @@ export function TransactionForm({
             name="transactionDate"
             type="date"
             required
-            defaultValue={today}
+            defaultValue={transaction?.transactionDate ?? today}
             className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
           />
 
@@ -190,6 +212,7 @@ export function TransactionForm({
               ? "For example, weekly groceries"
               : "For example, fortnightly salary"
           }
+          defaultValue={transaction?.description}
           className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
@@ -215,6 +238,7 @@ export function TransactionForm({
               ? "For example, Woolworths"
               : "For example, Employer"
           }
+          defaultValue={transaction?.merchant ?? ""}
           className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
@@ -234,7 +258,7 @@ export function TransactionForm({
             id="accountId"
             name="accountId"
             required
-            defaultValue=""
+            defaultValue={transaction?.accountId ?? ""}
             className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
           >
             <option value="" disabled>
@@ -264,7 +288,7 @@ export function TransactionForm({
             id="categoryId"
             name="categoryId"
             required
-            defaultValue=""
+            defaultValue={transaction?.categoryId ?? ""}
             className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
           >
             <option value="" disabled>
@@ -296,6 +320,7 @@ export function TransactionForm({
           rows={4}
           maxLength={1000}
           placeholder="Add any extra details..."
+          defaultValue={transaction?.notes ?? ""}
           className="mt-2 w-full resize-none rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
@@ -321,8 +346,10 @@ export function TransactionForm({
                 aria-hidden="true"
                 className="size-4 animate-spin"
               />
-              Saving...
+              {editing ? "Updating..." : "Saving..."}
             </>
+          ) : editing ? (
+            "Update transaction"
           ) : (
             "Save transaction"
           )}

@@ -20,6 +20,9 @@ const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 type TransactionsPageProps = {
   searchParams: Promise<{
     created?: string;
+    updated?: string;
+    deleted?: string;
+    error?: string;
     search?: string;
     type?: string;
     from?: string;
@@ -214,6 +217,33 @@ export default async function TransactionsPage({
           className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
         >
           Transaction saved successfully.
+        </div>
+      ) : null}
+
+      {params.updated === "true" ? (
+        <div
+          role="status"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+        >
+          Transaction updated successfully.
+        </div>
+      ) : null}
+
+      {params.deleted === "true" ? (
+        <div
+          role="status"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+        >
+          Transaction deleted successfully.
+        </div>
+      ) : null}
+
+      {params.error ? (
+        <div
+          role="alert"
+          className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+        >
+          The requested transaction operation could not be completed.
         </div>
       ) : null}
 
