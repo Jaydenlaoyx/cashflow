@@ -329,6 +329,22 @@ export type Database = {
           month_start: string
         }[]
       }
+      get_savings_goal_progress: {
+        Args: never
+        Returns: {
+          color: string
+          contribution_total: number
+          current_amount: number
+          goal_id: string
+          goal_name: string
+          initial_amount: number
+          is_completed: boolean
+          percentage_complete: number
+          remaining_amount: number
+          target_amount: number
+          target_date: string
+        }[]
+      }
       get_spending_by_category: {
         Args: { p_period_end: string; p_period_start: string }
         Returns: {
