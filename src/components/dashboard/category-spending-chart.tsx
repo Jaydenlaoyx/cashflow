@@ -20,11 +20,13 @@ type CategoryDataPoint = {
 type CategorySpendingChartProps = {
   data: CategoryDataPoint[];
   currencyCode: string;
+  emptyMessage?: string;
 };
 
 export function CategorySpendingChart({
   data,
   currencyCode,
+  emptyMessage = "No expenses recorded this month.",
 }: CategorySpendingChartProps) {
   const overallTotal = data.reduce(
     (total, category) => total + category.total,
@@ -35,7 +37,7 @@ export function CategorySpendingChart({
     return (
       <div className="flex h-72 items-center justify-center rounded-xl bg-slate-50">
         <p className="text-sm text-slate-500">
-          No expenses recorded this month.
+          {emptyMessage}
         </p>
       </div>
     );

@@ -312,6 +312,14 @@ export type Database = {
           spent_amount: number
         }[]
       }
+      get_daily_cash_flow: {
+        Args: { p_end_date: string; p_start_date: string }
+        Returns: {
+          activity_date: string
+          expenses: number
+          income: number
+        }[]
+      }
       get_dashboard_summary: {
         Args: { p_period_end: string; p_period_start: string }
         Returns: {
