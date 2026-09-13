@@ -299,6 +299,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_budget_progress: {
+        Args: { p_month_end: string; p_month_start: string }
+        Returns: {
+          budget_amount: number
+          budget_id: string
+          category_color: string
+          category_id: string
+          category_name: string
+          percentage_used: number
+          remaining_amount: number
+          spent_amount: number
+        }[]
+      }
       get_dashboard_summary: {
         Args: { p_period_end: string; p_period_start: string }
         Returns: {
