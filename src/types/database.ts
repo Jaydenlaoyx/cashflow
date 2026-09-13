@@ -299,6 +299,32 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_dashboard_summary: {
+        Args: { p_period_end: string; p_period_start: string }
+        Returns: {
+          currency_code: string
+          current_balance: number
+          period_expenses: number
+          period_income: number
+        }[]
+      }
+      get_monthly_cash_flow: {
+        Args: { p_end_month: string; p_start_month: string }
+        Returns: {
+          expenses: number
+          income: number
+          month_start: string
+        }[]
+      }
+      get_spending_by_category: {
+        Args: { p_period_end: string; p_period_start: string }
+        Returns: {
+          category_color: string
+          category_id: string
+          category_name: string
+          total: number
+        }[]
+      }
       seed_user_finance_data: {
         Args: {
           target_display_name: string
