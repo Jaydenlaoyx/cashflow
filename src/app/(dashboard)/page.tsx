@@ -13,6 +13,12 @@ import { SummaryCard } from "@/components/dashboard/summary-card";
 import { formatCurrency } from "@/lib/finance/format";
 import { createClient } from "@/lib/supabase/server";
 
+import {
+  DashboardBudgetOverview,
+  DashboardGoalsOverview,
+  DashboardRecentTransactions,
+} from "@/components/dashboard/dashboard-overviews";
+
 function getMelbourneDateParts() {
   const parts = new Intl.DateTimeFormat("en-AU", {
     timeZone: "Australia/Melbourne",
@@ -100,6 +106,9 @@ export default async function DashboardPage() {
     { data: summary, error: summaryError },
     { data: cashFlow, error: cashFlowError },
     { data: categorySpending, error: categoryError },
+    { data: budgetProgress, error: budgetError },
+    { data: savingsGoals, error: goalsError },
+    { data: recentTransactions, error: recentError },
   ] = await Promise.all([
     supabase
       .rpc("get_dashboard_summary", {
@@ -117,13 +126,54 @@ export default async function DashboardPage() {
       p_period_start: currentMonthStart,
       p_period_end: currentMonthEnd,
     }),
+
+    supabase.rpc("get_budget_progress", {
+      p_month_start: currentMonthStart,
+      p_month_end: currentMonthEnd,
+    }),
+
+    supabase.rpc("get_savings_goal_progress"),
+
+    supabase
+      .from("transactions")
+      .select(
+        `
+          id,
+          type,
+          amount,
+          description,
+          transaction_date,
+          category:categories!transactions_category_owner_fk (
+            name,
+            color
+          )
+        `,
+      )
+      .eq("user_id", userId)
+      .order("transaction_date", {
+        ascending: false,
+      })
+      .order("created_at", {
+        ascending: false,
+      })
+      .limit(5),
   ]);
 
-  if (summaryError || cashFlowError || categoryError) {
+  if (
+    summaryError ||
+    cashFlowError ||
+    categoryError ||
+    budgetError ||
+    goalsError ||
+    recentError
+  ) {
     console.error("Dashboard query failed:", {
       summaryError,
       cashFlowError,
       categoryError,
+      budgetError,
+      goalsError,
+      recentError,
     });
 
     throw new Error("Unable to load dashboard data.");
@@ -159,6 +209,44 @@ export default async function DashboardPage() {
       color: category.category_color,
       total: Number(category.total),
     }),
+  );
+
+  const budgetData = (budgetProgress ?? []).map((budget) => ({
+    id: budget.budget_id,
+    name: budget.category_name,
+    color: budget.category_color,
+    spent: Number(budget.spent_amount),
+    limit: Number(budget.budget_amount),
+    percentage: Number(budget.percentage_used),
+  }));
+
+  const goalData = (savingsGoals ?? [])
+    .filter((goal) => !goal.is_completed)
+    .map((goal) => ({
+      id: goal.goal_id,
+      name: goal.goal_name,
+      color: goal.color,
+      current: Number(goal.current_amount),
+      target: Number(goal.target_amount),
+      percentage: Number(goal.percentage_complete),
+    }));
+
+  const recentTransactionData = (recentTransactions ?? []).map(
+    (transaction) => {
+      const category = Array.isArray(transaction.category)
+        ? transaction.category[0]
+        : transaction.category;
+
+      return {
+        id: transaction.id,
+        type: transaction.type,
+        amount: Number(transaction.amount),
+        description: transaction.description,
+        transactionDate: transaction.transaction_date,
+        categoryName: category?.name ?? "Uncategorised",
+        categoryColor: category?.color ?? "#64748B",
+      };
+    },
   );
 
   return (
@@ -270,38 +358,23 @@ export default async function DashboardPage() {
         </article>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-2">
-        <article className="min-h-72 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="font-semibold text-slate-950">
-            Budget progress
-          </h2>
+      <section className="mt-6 grid items-start gap-6 lg:grid-cols-2">
+        <DashboardBudgetOverview
+          budgets={budgetData}
+          currencyCode={currencyCode}
+        />
 
-          <p className="mt-1 text-sm text-slate-500">
-            Monthly category spending limits
-          </p>
+        <DashboardGoalsOverview
+          goals={goalData}
+          currencyCode={currencyCode}
+        />
+      </section>
 
-          <div className="mt-6 flex h-44 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50">
-            <p className="text-sm text-slate-500">
-              Budget tracking coming next
-            </p>
-          </div>
-        </article>
-
-        <article className="min-h-72 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="font-semibold text-slate-950">
-            Savings goals
-          </h2>
-
-          <p className="mt-1 text-sm text-slate-500">
-            Progress toward your financial targets
-          </p>
-
-          <div className="mt-6 flex h-44 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50">
-            <p className="text-sm text-slate-500">
-              Savings planning coming later
-            </p>
-          </div>
-        </article>
+      <section className="mt-6">
+        <DashboardRecentTransactions
+          transactions={recentTransactionData}
+          currencyCode={currencyCode}
+        />
       </section>
     </>
   );
