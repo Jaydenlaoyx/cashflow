@@ -50,6 +50,7 @@ export default async function NewTransactionPage() {
       .from("categories")
       .select("id, name, type, color")
       .eq("user_id", userId)
+      .eq("is_archived", false)
       .order("name"),
   ]);
 

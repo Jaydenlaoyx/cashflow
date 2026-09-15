@@ -76,6 +76,7 @@ export async function saveBudget(
     .select("id, type")
     .eq("id", categoryId)
     .eq("user_id", userId)
+    .eq("is_archived", false)
     .maybeSingle();
 
   if (categoryError || !category || category.type !== "expense") {

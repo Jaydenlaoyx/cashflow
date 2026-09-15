@@ -159,6 +159,42 @@ export default async function DashboardPage() {
       .limit(5),
   ]);
 
+  if (summaryError) {
+    console.error("Summary error:", summaryError.message);
+  }
+
+  if (cashFlowError) {
+    console.error("Cash-flow error:", cashFlowError.message);
+  }
+
+  if (categoryError) {
+    console.error(
+      "Category-spending error:",
+      categoryError.message,
+    );
+  }
+
+  if (budgetError) {
+    console.error(
+      "Budget-progress error:",
+      budgetError.message,
+    );
+  }
+
+  if (goalsError) {
+    console.error(
+      "Savings-goals error:",
+      goalsError.message,
+    );
+  }
+
+  if (recentError) {
+    console.error(
+      "Recent-transactions error:",
+      recentError.message,
+    );
+  }
+
   if (
     summaryError ||
     cashFlowError ||
@@ -167,15 +203,6 @@ export default async function DashboardPage() {
     goalsError ||
     recentError
   ) {
-    console.error("Dashboard query failed:", {
-      summaryError,
-      cashFlowError,
-      categoryError,
-      budgetError,
-      goalsError,
-      recentError,
-    });
-
     throw new Error("Unable to load dashboard data.");
   }
 

@@ -106,6 +106,7 @@ export default async function RecurringPage({
       .from("categories")
       .select("id, name, type")
       .eq("user_id", userId)
+      .eq("is_archived", false)
       .order("name"),
 
     supabase

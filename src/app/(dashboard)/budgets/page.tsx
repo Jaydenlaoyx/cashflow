@@ -114,6 +114,7 @@ export default async function BudgetsPage({
       .select("id, name, color")
       .eq("user_id", userId)
       .eq("type", "expense")
+      .eq("is_archived", false)
       .order("name"),
 
     supabase

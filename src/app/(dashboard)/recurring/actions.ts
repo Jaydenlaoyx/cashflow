@@ -91,6 +91,7 @@ export async function createRecurringTransaction(
       .select("id, type")
       .eq("id", schedule.categoryId)
       .eq("user_id", userId)
+      .eq("is_archived", false)
       .maybeSingle(),
   ]);
 

@@ -79,6 +79,7 @@ export default async function EditTransactionPage({
       .from("categories")
       .select("id, name, type, color")
       .eq("user_id", userId)
+      .eq("is_archived", false)
       .order("name"),
   ]);
 

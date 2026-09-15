@@ -23,6 +23,7 @@ import {
 } from "@/app/(dashboard)/settings/actions";
 import { formatCurrency } from "@/lib/finance/format";
 import { createClient } from "@/lib/supabase/server";
+import { CategoryManagement } from "@/components/settings/category-management";
 
 export const metadata: Metadata = {
   title: "Settings",
@@ -35,6 +36,9 @@ type SettingsPageProps = {
     accountUpdated?: string;
     accountArchived?: string;
     accountRestored?: string;
+    categoryCreated?: string;
+    categoryArchived?: string;
+    categoryRestored?: string;
     error?: string;
   }>;
 };
@@ -89,6 +93,14 @@ function getErrorMessage(error?: string) {
       return "Select a supported currency.";
     case "invalid-account":
       return "Check the account details and try again.";
+    case "duplicate-category":
+      return "A category with that name and type already exists.";
+    case "last-active-category":
+      return "You must keep at least one active category of each type.";
+    case "category-in-recurring-use":
+      return "Pause or remove the active recurring schedules using this category before archiving it.";
+    case "invalid-category":
+      return "Check the category details and try again.";
     default:
       return error
         ? "The requested settings change could not be completed."
@@ -114,6 +126,7 @@ export default async function SettingsPage({
   const [
     { data: profile, error: profileError },
     { data: accounts, error: accountsError },
+    { data: categories, error: categoriesError },
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -136,12 +149,29 @@ export default async function SettingsPage({
       .eq("user_id", userId)
       .order("is_archived")
       .order("created_at"),
+
+    supabase
+      .from("categories")
+      .select(
+        `
+          id,
+          name,
+          type,
+          color,
+          is_default,
+          is_archived
+        `,
+      )
+      .eq("user_id", userId)
+      .order("is_archived")
+      .order("name"),
   ]);
 
-  if (profileError || accountsError) {
+  if (profileError || accountsError || categoriesError) {
     console.error("Settings query failed:", {
       profileError,
       accountsError,
+      categoriesError,
     });
 
     throw new Error("Unable to load settings.");
@@ -155,7 +185,10 @@ export default async function SettingsPage({
     params.accountCreated ||
     params.accountUpdated ||
     params.accountArchived ||
-    params.accountRestored;
+    params.accountRestored ||
+    params.categoryCreated ||
+    params.categoryArchived ||
+    params.categoryRestored;
 
   return (
     <section className="mx-auto max-w-5xl">
@@ -443,6 +476,17 @@ export default async function SettingsPage({
           ))}
         </div>
       </article>
+
+      <CategoryManagement
+        categories={(categories ?? []).map((category) => ({
+          id: category.id,
+          name: category.name,
+          type: category.type,
+          color: category.color,
+          isDefault: category.is_default,
+          isArchived: category.is_archived,
+        }))}
+      />
 
       <article className="mt-6 rounded-2xl border border-rose-200 bg-white p-6 shadow-sm">
         <h3 className="font-semibold text-slate-950">

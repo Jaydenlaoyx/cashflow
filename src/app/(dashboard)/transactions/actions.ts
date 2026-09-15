@@ -103,6 +103,7 @@ export async function createTransaction(
       .select("id, type")
       .eq("id", transaction.categoryId)
       .eq("user_id", userId)
+      .eq("is_archived", false)
       .maybeSingle(),
   ]);
 
@@ -223,6 +224,7 @@ export async function updateTransaction(
       .select("id, type")
       .eq("id", transaction.categoryId)
       .eq("user_id", userId)
+      .eq("is_archived", false)
       .maybeSingle(),
   ]);
 

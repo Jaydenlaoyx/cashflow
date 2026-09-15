@@ -100,9 +100,11 @@ export type Database = {
           created_at: string
           icon: string
           id: string
+          is_archived: boolean
           is_default: boolean
           name: string
           type: Database["public"]["Enums"]["transaction_type"]
+          updated_at: string
           user_id: string
         }
         Insert: {
@@ -110,9 +112,11 @@ export type Database = {
           created_at?: string
           icon?: string
           id?: string
+          is_archived?: boolean
           is_default?: boolean
           name: string
           type: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
           user_id: string
         }
         Update: {
@@ -120,9 +124,11 @@ export type Database = {
           created_at?: string
           icon?: string
           id?: string
+          is_archived?: boolean
           is_default?: boolean
           name?: string
           type?: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
