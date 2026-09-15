@@ -5,11 +5,12 @@ import {
   CalendarClock,
   Pause,
   Play,
+  RefreshCw,
   Repeat2,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 
-import { toggleRecurringTransaction } from "@/app/(dashboard)/recurring/actions";
+import { processDueRecurringTransactions, toggleRecurringTransaction } from "@/app/(dashboard)/recurring/actions";
 import { DeleteRecurringButton } from "@/components/recurring/delete-recurring-button";
 import { RecurringForm } from "@/components/recurring/recurring-form";
 import {
@@ -27,6 +28,8 @@ type RecurringPageProps = {
     created?: string;
     updated?: string;
     deleted?: string;
+    processed?: string;
+    generated?: string;
     error?: string;
   }>;
 };
@@ -130,6 +133,21 @@ export default async function RecurringPage({
 
   return (
     <section>
+      {params.processed === "true" ? (
+        <div
+          role="status"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+        >
+          {Number(params.generated ?? "0") === 0
+            ? "No recurring transactions were due."
+            : `${params.generated} recurring ${
+                Number(params.generated) === 1
+                  ? "transaction was"
+                  : "transactions were"
+              } generated successfully.`}
+        </div>
+      ) : null}
+
       {(params.created ||
         params.updated ||
         params.deleted) && (
@@ -144,19 +162,30 @@ export default async function RecurringPage({
         </div>
       ) : null}
 
-      <div>
-        <p className="text-sm font-medium text-emerald-700">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-sm font-medium text-emerald-700">
+            Automation
+          </p>
 
-          Automation
-        </p>
+          <h2 className="mt-1 text-2xl font-bold text-slate-950">
+            Recurring transactions
+          </h2>
 
-        <h2 className="mt-1 text-2xl font-bold text-slate-950">
-          Recurring transactions
-        </h2>
+          <p className="mt-2 text-sm text-slate-500">
+            Schedule regular income, subscriptions and bills.
+          </p>
+        </div>
 
-        <p className="mt-2 text-sm text-slate-500">
-          Schedule regular income, subscriptions and bills.
-        </p>
+        <form action={processDueRecurringTransactions}>
+          <button
+            type="submit"
+            className="flex h-11 items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            <RefreshCw aria-hidden="true" className="size-4" />
+            Process due transactions
+          </button>
+        </form>
       </div>
 
       <div className="mt-6 grid items-start gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">

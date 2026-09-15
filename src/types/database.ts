@@ -387,6 +387,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_next_recurrence_date: {
+        Args: {
+          p_current_date: string
+          p_frequency: Database["public"]["Enums"]["recurrence_frequency"]
+          p_start_date: string
+        }
+        Returns: string
+      }
       get_budget_progress: {
         Args: { p_month_end: string; p_month_start: string }
         Returns: {
@@ -449,6 +457,10 @@ export type Database = {
           category_name: string
           total: number
         }[]
+      }
+      process_due_recurring_transactions: {
+        Args: { p_through_date: string }
+        Returns: number
       }
       seed_user_finance_data: {
         Args: {
