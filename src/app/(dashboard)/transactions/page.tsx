@@ -9,6 +9,7 @@ import {
   type TransactionListItem,
 } from "@/components/transactions/transaction-list";
 import { createClient } from "@/lib/supabase/server";
+import { ExportTransactionsButton } from "@/components/transactions/export-transactions-button";
 
 export const metadata: Metadata = {
   title: "Transactions",
@@ -264,13 +265,17 @@ export default async function TransactionsPage({
           </p>
         </div>
 
-        <Link
-          href="/transactions/new"
-          className="flex h-11 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white transition hover:bg-emerald-700"
-        >
-          <Plus aria-hidden="true" className="size-4" />
-          Add transaction
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <ExportTransactionsButton />
+          
+          <Link
+            href="/transactions/new"
+            className="flex h-11 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white transition hover:bg-emerald-700"
+          >
+            <Plus aria-hidden="true" className="size-4" />
+            Add transaction
+          </Link>
+        </div>
       </div>
 
       <div className="mt-6">
