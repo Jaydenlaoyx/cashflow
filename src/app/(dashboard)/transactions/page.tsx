@@ -10,6 +10,7 @@ import {
 } from "@/components/transactions/transaction-list";
 import { createClient } from "@/lib/supabase/server";
 import { ExportTransactionsButton } from "@/components/transactions/export-transactions-button";
+import { ImportTransactionsButton } from "@/components/transactions/import-transactions-button";
 
 export const metadata: Metadata = {
   title: "Transactions",
@@ -266,6 +267,7 @@ export default async function TransactionsPage({
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <ImportTransactionsButton />
           <ExportTransactionsButton />
           
           <Link
