@@ -323,6 +323,7 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          import_fingerprint: string | null
           merchant: string | null
           notes: string | null
           recurrence_date: string | null
@@ -339,6 +340,7 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          import_fingerprint?: string | null
           merchant?: string | null
           notes?: string | null
           recurrence_date?: string | null
@@ -355,6 +357,7 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          import_fingerprint?: string | null
           merchant?: string | null
           notes?: string | null
           recurrence_date?: string | null

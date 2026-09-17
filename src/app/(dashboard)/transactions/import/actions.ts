@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { createHash } from "node:crypto";
 
 import type {
   ImportTransactionInput,
@@ -25,6 +26,10 @@ function isValidDate(value: string) {
 
 function normaliseName(value: string) {
   return value.trim().toLocaleLowerCase();
+}
+
+function createFingerprint(value: string) {
+  return createHash("sha256").update(value).digest("hex");
 }
 
 export async function importTransactions(
@@ -120,7 +125,7 @@ export async function importTransactions(
     ]),
   );
 
-  const transactions = [];
+  const validatedTransactions = [];
 
   for (let index = 0; index < rows.length; index += 1) {
     const row = rows[index];
@@ -145,7 +150,7 @@ export async function importTransactions(
       };
     }
 
-    transactions.push({
+    validatedTransactions.push({
       user_id: user.id,
       account_id: accountId,
       category_id: categoryId,
@@ -157,11 +162,30 @@ export async function importTransactions(
     });
   }
 
+  const batchFingerprint = createFingerprint(
+    JSON.stringify(validatedTransactions),
+  );
+
+  const transactions = validatedTransactions.map((transaction, index) => ({
+    ...transaction,
+    import_fingerprint: createFingerprint(
+      `${batchFingerprint}:${index}`,
+    ),
+  }));
+
   const { error: insertError } = await supabase
     .from("transactions")
     .insert(transactions);
 
   if (insertError) {
+    if (insertError.code === "23505") {
+      return {
+        success: false,
+        message:
+          "This CSV file has already been imported. No duplicate transactions were added.",
+      };
+    }
+
     console.error("Unable to import transactions:", insertError);
 
     return {
