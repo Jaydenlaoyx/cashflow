@@ -8,90 +8,12 @@ import { FileUp, TriangleAlert, X } from "lucide-react";
 import { importTransactions } from "@/app/(dashboard)/transactions/import/actions";
 import type { ImportTransactionInput } from "@/lib/transactions/import-types";
 
-type CsvRow = {
-  date?: string;
-  type?: string;
-  description?: string;
-  category?: string;
-  account?: string;
-  amount?: string;
-  notes?: string;
-};
-
-type PreviewRow = {
-  rowNumber: number;
-  date: string;
-  type: string;
-  description: string;
-  category: string;
-  account: string;
-  amount: string;
-  notes: string;
-  errors: string[];
-};
-
-const requiredHeaders = [
-  "date",
-  "type",
-  "description",
-  "category",
-  "account",
-  "amount",
-];
-
-function validateRow(row: CsvRow, index: number): PreviewRow {
-  const errors: string[] = [];
-
-  const date = row.date?.trim() ?? "";
-  const type = row.type?.trim().toLowerCase() ?? "";
-  const description = row.description?.trim() ?? "";
-  const category = row.category?.trim() ?? "";
-  const account = row.account?.trim() ?? "";
-  const amount = row.amount?.trim() ?? "";
-  const notes = row.notes?.trim() ?? "";
-
-  const validDate =
-    /^\d{4}-\d{2}-\d{2}$/.test(date) &&
-    !Number.isNaN(new Date(`${date}T00:00:00`).getTime());
-
-  if (!validDate) {
-    errors.push("Date must use YYYY-MM-DD format.");
-  }
-
-  if (type !== "income" && type !== "expense") {
-    errors.push('Type must be either "income" or "expense".');
-  }
-
-  if (!description) {
-    errors.push("Description is required.");
-  }
-
-  if (!category) {
-    errors.push("Category is required.");
-  }
-
-  if (!account) {
-    errors.push("Account is required.");
-  }
-
-  const parsedAmount = Number(amount);
-
-  if (!amount || !Number.isFinite(parsedAmount) || parsedAmount <= 0) {
-    errors.push("Amount must be greater than zero.");
-  }
-
-  return {
-    rowNumber: index + 2,
-    date,
-    type,
-    description,
-    category,
-    account,
-    amount,
-    notes,
-    errors,
-  };
-}
+import {
+  requiredImportHeaders,
+  validateImportRow,
+  type CsvRow,
+  type PreviewRow,
+} from "@/lib/transactions/import-validation";
 
 export function CsvImportPreview() {
   const router = useRouter();
@@ -132,7 +54,7 @@ export function CsvImportPreview() {
         header.replace(/^\uFEFF/, "").trim().toLowerCase(),
       complete: (result) => {
         const headers = result.meta.fields ?? [];
-        const missingHeaders = requiredHeaders.filter(
+        const missingHeaders = requiredImportHeaders.filter(
           (header) => !headers.includes(header),
         );
 
@@ -154,7 +76,7 @@ export function CsvImportPreview() {
           return;
         }
 
-        setRows(result.data.map(validateRow));
+        setRows(result.data.map(validateImportRow));
       },
       error: () => {
         setFileError("The CSV file could not be read.");
