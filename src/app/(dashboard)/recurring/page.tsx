@@ -137,7 +137,7 @@ export default async function RecurringPage({
       {params.processed === "true" ? (
         <div
           role="status"
-          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
         >
           {Number(params.generated ?? "0") === 0
             ? "No recurring transactions were due."
@@ -158,22 +158,22 @@ export default async function RecurringPage({
       )}
 
       {params.error ? (
-        <div className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <div className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300">
           The recurring schedule operation could not be completed.
         </div>
       ) : null}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-emerald-700">
+          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
             Automation
           </p>
 
-          <h2 className="mt-1 text-2xl font-bold text-slate-950">
+          <h2 className="mt-1 text-2xl font-bold text-slate-950 dark:text-white">
             Recurring transactions
           </h2>
 
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             Schedule regular income, subscriptions and bills.
           </p>
         </div>
@@ -181,7 +181,7 @@ export default async function RecurringPage({
         <form action={processDueRecurringTransactions}>
           <button
             type="submit"
-            className="flex h-11 items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+            className="flex h-11 items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
             <RefreshCw aria-hidden="true" className="size-4" />
             Process due transactions
@@ -190,8 +190,8 @@ export default async function RecurringPage({
       </div>
 
       <div className="mt-6 grid items-start gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
-        <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="font-semibold text-slate-950">
+        <aside className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-5 shadow-sm">
+          <h3 className="font-semibold text-slate-950 dark:text-white">
             New schedule
           </h3>
 
@@ -206,14 +206,14 @@ export default async function RecurringPage({
 
         <div className="space-y-4">
           {(schedules ?? []).length === 0 ? (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-              <Repeat2 className="mx-auto size-10 text-slate-400" />
+            <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-8 text-center shadow-sm">
+              <Repeat2 className="mx-auto size-10 text-slate-400 dark:text-slate-500" />
 
-              <h3 className="mt-4 font-semibold text-slate-950">
+              <h3 className="mt-4 font-semibold text-slate-950 dark:text-white">
                 No recurring schedules
               </h3>
 
-              <p className="mt-2 text-sm text-slate-500">
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                 Create a schedule for regular income or expenses.
               </p>
             </div>
@@ -232,18 +232,18 @@ export default async function RecurringPage({
               return (
                 <article
                   key={schedule.id}
-                  className={`rounded-2xl border bg-white p-5 shadow-sm ${
+                  className={`rounded-2xl border bg-white p-5 shadow-sm dark:bg-slate-900 ${
                     schedule.is_active
-                      ? "border-slate-200"
-                      : "border-slate-200 opacity-65"
+                      ? "border-slate-200 dark:border-slate-800"
+                      : "border-slate-200 opacity-65 dark:border-slate-800"
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <div
                       className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${
                         income
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-rose-100 text-rose-700"
+                          ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                          : "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400"
                       }`}
                     >
                       {income ? (
@@ -256,11 +256,11 @@ export default async function RecurringPage({
                     <div className="min-w-0 flex-1">
                       <div className="flex justify-between gap-3">
                         <div>
-                          <h3 className="font-semibold text-slate-950">
+                          <h3 className="font-semibold text-slate-950 dark:text-white">
                             {schedule.description}
                           </h3>
 
-                          <p className="mt-1 text-sm text-slate-500">
+                          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                             {category?.name ?? "Uncategorised"}
                             {" · "}
                             {account?.name ?? "Unknown account"}
@@ -270,8 +270,8 @@ export default async function RecurringPage({
                         <p
                           className={`font-bold ${
                             income
-                              ? "text-emerald-700"
-                              : "text-slate-950"
+                              ? "text-emerald-700 dark:text-emerald-400"
+                              : "text-slate-950 dark:text-white"
                           }`}
                         >
                           {income ? "+" : "−"}
@@ -283,11 +283,11 @@ export default async function RecurringPage({
                       </div>
 
                       <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                        <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600">
+                        <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                           {frequencyLabels[schedule.frequency]}
                         </span>
 
-                        <span className="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-slate-600">
+                        <span className="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                           <CalendarClock className="size-3.5" />
                           Next:{" "}
                           {formatTransactionDate(
@@ -296,7 +296,7 @@ export default async function RecurringPage({
                         </span>
                       </div>
 
-                      <div className="mt-4 flex justify-end gap-2 border-t border-slate-100 pt-4">
+                      <div className="mt-4 flex justify-end gap-2 border-t border-slate-100 pt-4 dark:border-slate-800">
                         <form
                           action={toggleRecurringTransaction.bind(
                             null,
@@ -306,7 +306,7 @@ export default async function RecurringPage({
                         >
                           <button
                             type="submit"
-                            className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                            className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                           >
                             {schedule.is_active ? (
                               <Pause className="size-4" />

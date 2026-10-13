@@ -23,7 +23,7 @@ type BudgetFormProps = {
 
 function FieldError({ messages }: { messages?: string[] }) {
   return messages?.length ? (
-    <p className="mt-1.5 text-xs text-rose-600">
+    <p className="mt-1.5 text-xs text-rose-600 dark:text-rose-400">
       {messages[0]}
     </p>
   ) : null;
@@ -45,7 +45,7 @@ export function BudgetForm({
       {state.error ? (
         <div
           role="alert"
-          className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300"
         >
           {state.error}
         </div>
@@ -54,7 +54,7 @@ export function BudgetForm({
       <div>
         <label
           htmlFor="categoryId"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Expense category
         </label>
@@ -64,7 +64,7 @@ export function BudgetForm({
           name="categoryId"
           required
           defaultValue=""
-          className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:[color-scheme:dark]"
         >
           <option value="" disabled>
             Select a category
@@ -83,13 +83,13 @@ export function BudgetForm({
       <div>
         <label
           htmlFor="amount"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Monthly limit
         </label>
 
         <div className="relative mt-2">
-          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm font-medium text-slate-500">
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm font-medium text-slate-500 dark:text-slate-400">
             $
           </span>
 
@@ -102,7 +102,7 @@ export function BudgetForm({
             step="0.01"
             required
             placeholder="500.00"
-            className="h-11 w-full rounded-xl border border-slate-300 bg-white pl-8 pr-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+            className="h-11 w-full rounded-xl border border-slate-300 bg-white pl-8 pr-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:[color-scheme:dark]"
           />
         </div>
 
@@ -130,7 +130,7 @@ export function BudgetForm({
         )}
       </button>
 
-      <p className="text-xs leading-5 text-slate-400">
+      <p className="text-xs leading-5 text-slate-400 dark:text-slate-500">
         Selecting a category that already has a budget will update its
         existing limit.
       </p>

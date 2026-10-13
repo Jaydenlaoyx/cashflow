@@ -21,7 +21,7 @@ export default async function LoginPage({
   const { error, message } = await searchParams;
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <section className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-6 shadow-sm sm:p-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-slate-950">
           Welcome back

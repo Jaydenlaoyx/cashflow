@@ -42,14 +42,14 @@ function TransactionIcon({
 }) {
   if (type === "income") {
     return (
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
         <ArrowUpRight aria-hidden="true" className="size-5" />
       </span>
     );
   }
 
   return (
-    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-700">
+    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400">
       <ArrowDownRight aria-hidden="true" className="size-5" />
     </span>
   );
@@ -62,18 +62,18 @@ export function TransactionList({
 }: TransactionListProps) {
   if (transactions.length === 0) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-500">
+      <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-8 text-center shadow-sm">
+        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
           <ReceiptText aria-hidden="true" className="size-7" />
         </div>
 
-        <h3 className="mt-5 font-semibold text-slate-950">
+        <h3 className="mt-5 font-semibold text-slate-950 dark:text-white">
           {hasFilters
             ? "No matching transactions"
             : "No transactions yet"}
         </h3>
 
-        <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+        <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500 dark:text-slate-400">
           {hasFilters
             ? "Try changing or clearing the current search filters."
             : "Add your first income or expense to begin tracking your cash flow."}
@@ -84,50 +84,50 @@ export function TransactionList({
 
   return (
     <>
-      <div className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:block">
+      <div className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 md:block">
         <table className="w-full border-collapse text-left">
-          <thead className="border-b border-slate-200 bg-slate-50">
+          <thead className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/70">
             <tr>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Transaction
               </th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Category
               </th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Account
               </th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Date
               </th>
-              <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Amount
               </th>
-              <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Actions
               </th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {transactions.map((transaction) => {
               const income = transaction.type === "income";
 
               return (
                 <tr
                   key={transaction.id}
-                  className="transition hover:bg-slate-50"
+                  className="transition hover:bg-slate-50 dark:hover:bg-slate-800/60"
                 >
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <TransactionIcon type={transaction.type} />
 
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-slate-900">
+                        <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
                           {transaction.description}
                         </p>
 
-                        <p className="mt-0.5 truncate text-xs text-slate-500">
+                        <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">
                           {transaction.merchant || "No merchant"}
                         </p>
                       </div>
@@ -135,7 +135,7 @@ export function TransactionList({
                   </td>
 
                   <td className="px-5 py-4">
-                    <span className="inline-flex items-center gap-2 text-sm text-slate-700">
+                    <span className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                       <span
                         aria-hidden="true"
                         className="size-2.5 rounded-full"
@@ -149,11 +149,11 @@ export function TransactionList({
                     </span>
                   </td>
 
-                  <td className="px-5 py-4 text-sm text-slate-600">
+                  <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-400">
                     {transaction.account?.name ?? "Unknown account"}
                   </td>
 
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-600">
+                  <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-600 dark:text-slate-400">
                     {formatTransactionDate(
                       transaction.transaction_date,
                     )}
@@ -161,7 +161,7 @@ export function TransactionList({
 
                   <td
                     className={`whitespace-nowrap px-5 py-4 text-right text-sm font-bold ${
-                      income ? "text-emerald-700" : "text-slate-950"
+                      income ? "text-emerald-700 dark:text-emerald-400" : "text-slate-950 dark:text-white"
                     }`}
                   >
                     {income ? "+" : "−"}
@@ -177,7 +177,7 @@ export function TransactionList({
                         href={`/transactions/${transaction.id}/edit`}
                         aria-label={`Edit ${transaction.description}`}
                         title="Edit transaction"
-                        className="flex size-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-700"
+                        className="flex size-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-700 dark:text-slate-500 dark:hover:bg-emerald-950 dark:hover:text-emerald-400"
                       >
                         <Pencil aria-hidden="true" className="size-4" />
                       </Link>
@@ -203,7 +203,7 @@ export function TransactionList({
           return (
             <article
               key={transaction.id}
-              className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+              className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-4 shadow-sm"
             >
               <div className="flex items-start gap-3">
                 <TransactionIcon type={transaction.type} />
@@ -211,11 +211,11 @@ export function TransactionList({
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <h3 className="truncate text-sm font-semibold text-slate-900">
+                      <h3 className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
                         {transaction.description}
                       </h3>
 
-                      <p className="mt-0.5 truncate text-xs text-slate-500">
+                      <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">
                         {transaction.merchant || "No merchant"}
                       </p>
                     </div>
@@ -223,8 +223,8 @@ export function TransactionList({
                     <p
                       className={`shrink-0 text-sm font-bold ${
                         income
-                          ? "text-emerald-700"
-                          : "text-slate-950"
+                          ? "text-emerald-700 dark:text-emerald-400"
+                          : "text-slate-950 dark:text-white"
                       }`}
                     >
                       {income ? "+" : "−"}
@@ -235,7 +235,7 @@ export function TransactionList({
                     </p>
                   </div>
 
-                  <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                  <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                     <span className="inline-flex items-center gap-1.5">
                       <span
                         aria-hidden="true"
@@ -259,10 +259,10 @@ export function TransactionList({
                 </div>
               </div>
 
-              <div className="mt-4 flex justify-end gap-2 border-t border-slate-100 pt-3">
+              <div className="mt-4 flex justify-end gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
                 <Link
                   href={`/transactions/${transaction.id}/edit`}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+                  className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
                 >
                   <Pencil aria-hidden="true" className="size-4" />
                   Edit

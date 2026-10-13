@@ -281,16 +281,16 @@ export default async function DashboardPage() {
       <section>
         <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-medium text-emerald-700">
+            <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
               {monthLabel}
             </p>
 
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+            <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
               Financial overview
             </h2>
           </div>
 
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             All accounts · {currencyCode}
           </p>
         </div>
@@ -350,13 +350,13 @@ export default async function DashboardPage() {
       </section>
 
       <section className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1.6fr)_minmax(320px,1fr)]">
-        <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <article className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-5 shadow-sm">
           <div className="mb-6">
-            <h2 className="font-semibold text-slate-950">
+            <h2 className="font-semibold text-slate-950 dark:text-white">
               Cash-flow overview
             </h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Income and expenses over the last six months
             </p>
           </div>
@@ -367,13 +367,13 @@ export default async function DashboardPage() {
           />
         </article>
 
-        <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <article className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-5 shadow-sm">
           <div>
-            <h2 className="font-semibold text-slate-950">
+            <h2 className="font-semibold text-slate-950 dark:text-white">
               Spending by category
             </h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Your expenses in {monthLabel}
             </p>
           </div>

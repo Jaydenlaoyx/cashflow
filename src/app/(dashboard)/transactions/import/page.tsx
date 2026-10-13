@@ -19,7 +19,7 @@ export default function ImportTransactionsPage() {
           Import transactions
         </h1>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Upload a CashFlow CSV file and review every transaction before
           importing it.
         </p>

@@ -32,7 +32,7 @@ export function DeleteGoalButton({
         type="submit"
         aria-label={`Delete ${goalName}`}
         title="Delete goal"
-        className="flex size-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+        className="flex size-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-rose-50 hover:text-rose-600 dark:text-slate-500 dark:hover:bg-rose-950 dark:hover:text-rose-400"
       >
         <Trash2 aria-hidden="true" className="size-4" />
       </button>

@@ -83,20 +83,20 @@ export default async function NewTransactionPage() {
   return (
     <section className="mx-auto max-w-3xl">
       <div className="mb-6">
-        <p className="text-sm font-medium text-emerald-700">
+        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
           Money movement
         </p>
 
-        <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
           Add transaction
         </h2>
 
-        <p className="mt-2 text-sm text-slate-500">
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
           Record income or spending against one of your accounts.
         </p>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+      <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-5 shadow-sm sm:p-7">
         <TransactionForm
           accounts={accounts ?? []}
           categories={categories ?? []}

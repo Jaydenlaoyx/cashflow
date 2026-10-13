@@ -35,8 +35,8 @@ export function CategorySpendingChart({
 
   if (data.length === 0) {
     return (
-      <div className="flex h-72 items-center justify-center rounded-xl bg-slate-50">
-        <p className="text-sm text-slate-500">
+      <div className="flex h-72 items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/60">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           {emptyMessage}
         </p>
       </div>
@@ -72,21 +72,27 @@ export function CategorySpendingChart({
                 formatCurrency(Number(value), currencyCode)
               }
               contentStyle={{
+                backgroundColor: "var(--chart-tooltip-background)",
                 borderRadius: "12px",
-                border: "1px solid #E2E8F0",
+                border: "1px solid var(--chart-tooltip-border)",
+                color: "var(--chart-text)",
                 boxShadow:
-                  "0 8px 24px rgba(15, 23, 42, 0.08)",
+                  "0 8px 24px var(--chart-tooltip-shadow)",
+              }}
+              labelStyle={{
+                color: "var(--chart-text)",
+                fontWeight: 600,
               }}
             />
           </PieChart>
         </ResponsiveContainer>
 
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xs font-medium text-slate-500">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
             Total spent
           </span>
 
-          <span className="mt-1 text-lg font-bold text-slate-950">
+          <span className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
             {formatCurrency(overallTotal, currencyCode)}
           </span>
         </div>
@@ -113,20 +119,20 @@ export function CategorySpendingChart({
                   }}
                 />
 
-                <span className="truncate text-sm text-slate-600">
+                <span className="truncate text-sm text-slate-600 dark:text-slate-300">
                   {category.name}
                 </span>
               </div>
 
               <div className="shrink-0 text-right">
-                <p className="text-sm font-semibold text-slate-900">
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                   {formatCurrency(
                     category.total,
                     currencyCode,
                   )}
                 </p>
 
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-400 dark:text-slate-500">
                   {percentage.toFixed(1)}%
                 </p>
               </div>

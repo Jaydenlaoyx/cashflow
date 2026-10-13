@@ -260,20 +260,20 @@ export default async function AnalyticsPage({
     <section>
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-sm font-medium text-emerald-700">
+          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
             Financial analysis
           </p>
 
-          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
             Income and expense breakdown
           </h2>
 
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             Understand how your cash flow changes over time.
           </p>
         </div>
 
-        <div className="flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+        <div className="flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <Link
             href={createAnalyticsUrl(
               "monthly",
@@ -282,7 +282,7 @@ export default async function AnalyticsPage({
             className={`flex h-9 items-center rounded-lg px-4 text-sm font-semibold transition ${
               view === "monthly"
                 ? "bg-emerald-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
             }`}
           >
             Monthly
@@ -296,7 +296,7 @@ export default async function AnalyticsPage({
             className={`flex h-9 items-center rounded-lg px-4 text-sm font-semibold transition ${
               view === "yearly"
                 ? "bg-emerald-600 text-white"
-                : "text-slate-600 hover:bg-slate-100"
+                : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
             }`}
           >
             Yearly
@@ -305,23 +305,23 @@ export default async function AnalyticsPage({
       </div>
 
       <div className="mt-6 flex items-center justify-center">
-        <div className="flex items-center rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+        <div className="flex items-center rounded-xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <Link
             href={createAnalyticsUrl(view, previousPeriod)}
             aria-label={`Previous ${view === "monthly" ? "month" : "year"}`}
-            className="flex size-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100"
+            className="flex size-9 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             <ChevronLeft className="size-4" />
           </Link>
 
-          <span className="min-w-44 px-4 text-center text-sm font-semibold text-slate-800">
+          <span className="min-w-44 px-4 text-center text-sm font-semibold text-slate-800 dark:text-slate-100">
             {periodLabel}
           </span>
 
           <Link
             href={createAnalyticsUrl(view, nextPeriod)}
             aria-label={`Next ${view === "monthly" ? "month" : "year"}`}
-            className="flex size-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100"
+            className="flex size-9 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             <ChevronRight className="size-4" />
           </Link>
@@ -376,14 +376,14 @@ export default async function AnalyticsPage({
       </div>
 
       <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(320px,1fr)]">
-        <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="font-semibold text-slate-950">
+        <article className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-5 shadow-sm">
+          <h3 className="font-semibold text-slate-950 dark:text-white">
             {view === "monthly"
               ? "Daily cash flow"
               : "Monthly cash flow"}
           </h3>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Income compared with expenses during {periodLabel}
           </p>
 
@@ -395,12 +395,12 @@ export default async function AnalyticsPage({
           </div>
         </article>
 
-        <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="font-semibold text-slate-950">
+        <article className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-5 shadow-sm">
+          <h3 className="font-semibold text-slate-950 dark:text-white">
             Expense categories
           </h3>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Spending distribution during {periodLabel}
           </p>
 

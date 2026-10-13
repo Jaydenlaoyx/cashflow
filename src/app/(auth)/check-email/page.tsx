@@ -18,7 +18,7 @@ export default async function CheckEmailPage({
   const { email } = await searchParams;
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+    <section className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-8 text-center shadow-sm">
       <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
         <MailCheck aria-hidden="true" className="size-7" />
       </div>

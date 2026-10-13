@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Bell, PiggyBank, Plus } from "lucide-react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 const pageInformation: Record<
   string,
@@ -22,6 +23,10 @@ const pageInformation: Record<
   "/transactions/new": {
     title: "Add transaction",
     description: "Record new income or spending.",
+  },
+  "/transactions/import": {
+    title: "Import transactions",
+    description: "Review and import transactions from a CSV file.",
   },
   "/analytics": {
     title: "Analytics",
@@ -43,6 +48,7 @@ const pageInformation: Record<
     title: "Settings",
     description: "Manage your preferences, categories and account.",
   },
+  
 };
 
 export function AppHeader() {
@@ -62,7 +68,7 @@ export function AppHeader() {
         });
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       <div className="flex h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white lg:hidden">
@@ -70,21 +76,22 @@ export function AppHeader() {
           </div>
 
           <div className="min-w-0">
-            <h1 className="truncate text-xl font-bold tracking-tight text-slate-950">
+            <h1 className="truncate text-xl font-bold tracking-tight text-slate-950 dark:text-white">
               {currentPage.title}
             </h1>
 
-            <p className="hidden text-sm text-slate-500 sm:block">
+            <p className="hidden text-sm text-slate-500 dark:text-slate-400 sm:block">
               {currentPage.description}
             </p>
           </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
+          <ThemeToggle />
           <button
             type="button"
             aria-label="View notifications"
-            className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-100"
+            className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             <Bell aria-hidden="true" className="size-5" />
           </button>

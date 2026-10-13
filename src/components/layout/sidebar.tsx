@@ -58,17 +58,17 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white lg:flex lg:flex-col">
+    <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:flex lg:flex-col">
       <div className="flex h-20 items-center gap-3 px-6">
         <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-600 text-white">
           <PiggyBank aria-hidden="true" className="size-6" />
         </div>
 
         <div>
-          <p className="text-lg font-bold tracking-tight text-slate-950">
+          <p className="text-lg font-bold tracking-tight text-slate-950 dark:text-white">
             CashFlow
           </p>
-          <p className="text-xs text-slate-500">Personal finance</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Personal finance</p>
         </div>
       </div>
 
@@ -85,8 +85,8 @@ export function Sidebar() {
                   aria-current={active ? "page" : undefined}
                   className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
                     active
-                      ? "bg-emerald-50 text-emerald-700"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                   }`}
                 >
                   <Icon aria-hidden="true" className="size-5" />
@@ -98,14 +98,14 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      <div className="border-t border-slate-200 p-3">
+      <div className="border-t border-slate-200 p-3 dark:border-slate-800">
         <Link
           href="/settings"
           aria-current={pathname === "/settings" ? "page" : undefined}
           className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
             pathname === "/settings"
-              ? "bg-emerald-50 text-emerald-700"
-              : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+              ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+              : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
           }`}
         >
           <Settings aria-hidden="true" className="size-5" />

@@ -49,7 +49,7 @@ function FieldError({ messages }: { messages?: string[] }) {
   }
 
   return (
-    <p className="mt-1.5 text-xs text-rose-600">
+    <p className="mt-1.5 text-xs text-rose-600 dark:text-rose-400">
       {messages[0]}
     </p>
   );
@@ -65,7 +65,7 @@ export function TransactionForm({
 
   const [transactionType, setTransactionType] = useState<
     "income" | "expense"
-  >("expense");
+  >(transaction?.type ?? "expense");
 
   const transactionAction = transaction
     ? updateTransaction.bind(null, transaction.id)
@@ -85,14 +85,14 @@ export function TransactionForm({
       {state.error ? (
         <div
           role="alert"
-          className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300"
         >
           {state.error}
         </div>
       ) : null}
 
       <fieldset>
-        <legend className="text-sm font-medium text-slate-700">
+        <legend className="text-sm font-medium text-slate-700 dark:text-slate-300">
           Transaction type
         </legend>
 
@@ -100,8 +100,8 @@ export function TransactionForm({
           <label
             className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition ${
               transactionType === "expense"
-                ? "border-rose-500 bg-rose-50 text-rose-700 ring-4 ring-rose-500/10"
-                : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                ? "border-rose-500 bg-rose-50 text-rose-700 ring-4 ring-rose-500/10 dark:bg-rose-950 dark:text-rose-400"
+                : "border-emerald-500 bg-emerald-50 text-emerald-700 ring-4 ring-emerald-500/10 dark:bg-emerald-950 dark:text-emerald-400"
             }`}
           >
             <input
@@ -121,7 +121,7 @@ export function TransactionForm({
             className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition ${
               transactionType === "income"
                 ? "border-emerald-500 bg-emerald-50 text-emerald-700 ring-4 ring-emerald-500/10"
-                : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
             }`}
           >
             <input
@@ -145,13 +145,13 @@ export function TransactionForm({
         <div>
           <label
             htmlFor="amount"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Amount
           </label>
 
           <div className="relative mt-2">
-            <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm font-medium text-slate-500">
+            <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm font-medium text-slate-500 dark:text-slate-400">
               $
             </span>
 
@@ -165,7 +165,7 @@ export function TransactionForm({
               required
               placeholder="0.00"
               defaultValue={transaction?.amount}
-              className="h-11 w-full rounded-xl border border-slate-300 bg-white pl-8 pr-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+              className="h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 pl-8 pr-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
             />
           </div>
 
@@ -175,7 +175,7 @@ export function TransactionForm({
         <div>
           <label
             htmlFor="transactionDate"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Date
           </label>
@@ -186,7 +186,7 @@ export function TransactionForm({
             type="date"
             required
             defaultValue={transaction?.transactionDate ?? today}
-            className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+            className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:[color-scheme:dark]"
           />
 
           <FieldError messages={state.fieldErrors?.transactionDate} />
@@ -196,7 +196,7 @@ export function TransactionForm({
       <div>
         <label
           htmlFor="description"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Description
         </label>
@@ -213,7 +213,7 @@ export function TransactionForm({
               : "For example, fortnightly salary"
           }
           defaultValue={transaction?.description}
-          className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
         <FieldError messages={state.fieldErrors?.description} />
@@ -222,10 +222,10 @@ export function TransactionForm({
       <div>
         <label
           htmlFor="merchant"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Merchant or source{" "}
-          <span className="font-normal text-slate-400">(optional)</span>
+          <span className="font-normal text-slate-400 dark:text-slate-500">(optional)</span>
         </label>
 
         <input
@@ -239,7 +239,7 @@ export function TransactionForm({
               : "For example, Employer"
           }
           defaultValue={transaction?.merchant ?? ""}
-          className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
         <FieldError messages={state.fieldErrors?.merchant} />
@@ -249,7 +249,7 @@ export function TransactionForm({
         <div>
           <label
             htmlFor="accountId"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Account
           </label>
@@ -259,7 +259,7 @@ export function TransactionForm({
             name="accountId"
             required
             defaultValue={transaction?.accountId ?? ""}
-            className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+            className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:[color-scheme:dark]"
           >
             <option value="" disabled>
               Select an account
@@ -278,7 +278,7 @@ export function TransactionForm({
         <div>
           <label
             htmlFor="categoryId"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Category
           </label>
@@ -289,7 +289,7 @@ export function TransactionForm({
             name="categoryId"
             required
             defaultValue={transaction?.categoryId ?? ""}
-            className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+            className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:[color-scheme:dark]"
           >
             <option value="" disabled>
               Select a category
@@ -309,9 +309,9 @@ export function TransactionForm({
       <div>
         <label
           htmlFor="notes"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
-          Notes <span className="font-normal text-slate-400">(optional)</span>
+          Notes <span className="font-normal text-slate-400 dark:text-slate-500">(optional)</span>
         </label>
 
         <textarea
@@ -321,16 +321,16 @@ export function TransactionForm({
           maxLength={1000}
           placeholder="Add any extra details..."
           defaultValue={transaction?.notes ?? ""}
-          className="mt-2 w-full resize-none rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="mt-2 w-full resize-none rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 px-3 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
         />
 
         <FieldError messages={state.fieldErrors?.notes} />
       </div>
 
-      <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:justify-end">
+      <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 dark:border-slate-800 sm:flex-row sm:justify-end">
         <Link
           href="/transactions"
-          className="flex h-11 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          className="flex h-11 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300 dark:hover:bg-slate-800"
         >
           Cancel
         </Link>

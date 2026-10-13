@@ -40,7 +40,7 @@ export function RecurringForm({
   );
 
   const inputStyles =
-    "mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10";
+    "mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:[color-scheme:dark]";
 
   return (
     <form
@@ -48,7 +48,7 @@ export function RecurringForm({
       className="space-y-5"
     >
       <fieldset>
-        <legend className="text-sm font-medium text-slate-700">
+        <legend className="text-sm font-medium text-slate-700 dark:text-slate-300">
           Transaction type
         </legend>
 
@@ -56,8 +56,8 @@ export function RecurringForm({
           <label
             className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-semibold ${
               type === "expense"
-                ? "border-rose-500 bg-rose-50 text-rose-700"
-                : "border-slate-200 text-slate-600"
+                ? "border-rose-500 bg-rose-50 text-rose-700 dark:border-rose-500 dark:bg-rose-950 dark:text-rose-400"
+                : "border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
             }`}
           >
             <input
@@ -75,8 +75,8 @@ export function RecurringForm({
           <label
             className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-semibold ${
               type === "income"
-                ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-                : "border-slate-200 text-slate-600"
+                ? "border-emerald-500 bg-emerald-50 text-emerald-700 dark:border-emerald-500 dark:bg-emerald-950 dark:text-emerald-400"
+                : "border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
             }`}
           >
             <input
@@ -96,7 +96,7 @@ export function RecurringForm({
       <div>
         <label
           htmlFor="description"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Description
         </label>
@@ -119,7 +119,7 @@ export function RecurringForm({
         <div>
           <label
             htmlFor="amount"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Amount
           </label>
@@ -139,7 +139,7 @@ export function RecurringForm({
         <div>
           <label
             htmlFor="frequency"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Frequency
           </label>
@@ -164,7 +164,7 @@ export function RecurringForm({
         <div>
           <label
             htmlFor="accountId"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Account
           </label>
@@ -191,7 +191,7 @@ export function RecurringForm({
         <div>
           <label
             htmlFor="categoryId"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             Category
           </label>
@@ -220,10 +220,10 @@ export function RecurringForm({
       <div>
         <label
           htmlFor="merchant"
-          className="text-sm font-medium text-slate-700"
+          className="text-sm font-medium text-slate-700 dark:text-slate-300"
         >
           Merchant or source{" "}
-          <span className="font-normal text-slate-400">
+          <span className="font-normal text-slate-400 dark:text-slate-500">
             (optional)
           </span>
         </label>
@@ -240,7 +240,7 @@ export function RecurringForm({
         <div>
           <label
             htmlFor="startDate"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             First occurrence
           </label>
@@ -258,7 +258,7 @@ export function RecurringForm({
         <div>
           <label
             htmlFor="endDate"
-            className="text-sm font-medium text-slate-700"
+            className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             End date{" "}
             <span className="font-normal text-slate-400">
@@ -279,7 +279,7 @@ export function RecurringForm({
 
       <button
         type="submit"
-        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-700"
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white transition hover:bg-emerald-700"
       >
         <Plus className="size-4" />
         Create recurring schedule

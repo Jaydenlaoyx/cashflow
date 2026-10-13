@@ -1,10 +1,30 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  color-scheme: light;
   --background: #f8fafc;
   --foreground: #0f172a;
+
+  --chart-grid: #e2e8f0;
+  --chart-text: #64748b;
+  --chart-tooltip-background: #ffffff;
+  --chart-tooltip-border: #e2e8f0;
+  --chart-tooltip-shadow: rgba(15, 23, 42, 0.08);
 }
 
+html.dark {
+  color-scheme: dark;
+  --background: #020617;
+  --foreground: #f8fafc;
+
+  --chart-grid: #334155;
+  --chart-text: #94a3b8;
+  --chart-tooltip-background: #0f172a;
+  --chart-tooltip-border: #334155;
+  --chart-tooltip-shadow: rgba(0, 0, 0, 0.35);
+}
 * {
   box-sizing: border-box;
 }

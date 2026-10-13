@@ -216,7 +216,7 @@ export default async function TransactionsPage({
       {params.created === "true" ? (
         <div
           role="status"
-          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
         >
           Transaction saved successfully.
         </div>
@@ -225,7 +225,7 @@ export default async function TransactionsPage({
       {params.updated === "true" ? (
         <div
           role="status"
-          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
         >
           Transaction updated successfully.
         </div>
@@ -234,7 +234,7 @@ export default async function TransactionsPage({
       {params.deleted === "true" ? (
         <div
           role="status"
-          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
         >
           Transaction deleted successfully.
         </div>
@@ -243,7 +243,7 @@ export default async function TransactionsPage({
       {params.error ? (
         <div
           role="alert"
-          className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300"
         >
           The requested transaction operation could not be completed.
         </div>
@@ -251,15 +251,15 @@ export default async function TransactionsPage({
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-emerald-700">
+          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
             Financial activity
           </p>
 
-          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
             All transactions
           </h2>
 
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             {totalTransactions === 1
               ? "1 transaction found"
               : `${totalTransactions} transactions found`}
@@ -301,7 +301,7 @@ export default async function TransactionsPage({
 
       {totalTransactions > 0 ? (
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Page {page} of {totalPages}
           </p>
 
@@ -309,7 +309,7 @@ export default async function TransactionsPage({
             {page > 1 ? (
               <Link
                 href={createPageUrl(page - 1, filters)}
-                className="flex h-10 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="flex h-10 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 <ChevronLeft
                   aria-hidden="true"
@@ -318,7 +318,7 @@ export default async function TransactionsPage({
                 Previous
               </Link>
             ) : (
-              <span className="flex h-10 cursor-not-allowed items-center gap-2 rounded-xl border border-slate-200 bg-slate-100 px-4 text-sm font-semibold text-slate-400">
+              <span className="flex h-10 cursor-not-allowed items-center gap-2 rounded-xl border border-slate-200 bg-slate-100 px-4 text-sm font-semibold text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-600">
                 <ChevronLeft
                   aria-hidden="true"
                   className="size-4"
@@ -330,7 +330,7 @@ export default async function TransactionsPage({
             {page < totalPages ? (
               <Link
                 href={createPageUrl(page + 1, filters)}
-                className="flex h-10 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="flex h-10 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 Next
                 <ChevronRight
@@ -339,7 +339,7 @@ export default async function TransactionsPage({
                 />
               </Link>
             ) : (
-              <span className="flex h-10 cursor-not-allowed items-center gap-2 rounded-xl border border-slate-200 bg-slate-100 px-4 text-sm font-semibold text-slate-400">
+              <span className="flex h-10 cursor-not-allowed items-center gap-2 rounded-xl border border-slate-200 bg-slate-100 px-4 text-sm font-semibold text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-600">
                 Next
                 <ChevronRight
                   aria-hidden="true"

@@ -122,13 +122,13 @@ export function CsvImportPreview() {
   return (
     <div className="space-y-6">
       <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-300 bg-white px-6 py-12 text-center transition hover:border-blue-500 hover:bg-blue-50/50 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-500 dark:hover:bg-blue-950/20">
-        <FileUp className="mb-3 h-8 w-8 text-blue-600" />
+        <FileUp className="mb-3 h-8 w-8 text-blue-600 dark:text-blue-400" />
 
         <span className="font-medium text-slate-900 dark:text-white">
           Choose a CSV file
         </span>
 
-        <span className="mt-1 text-sm text-slate-500">
+        <span className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Maximum 1,000 transactions
         </span>
 
@@ -136,7 +136,10 @@ export function CsvImportPreview() {
           type="file"
           accept=".csv,text/csv"
           className="sr-only"
-          onChange={(event) => handleFile(event.target.files?.[0])}
+          onChange={(event) => {
+            handleFile(event.target.files?.[0]);
+            event.currentTarget.value = "";
+          }}
         />
       </label>
 
@@ -244,7 +247,7 @@ export function CsvImportPreview() {
               </tbody>
             </table>
 
-            <div className="flex justify-end">
+            <div className="flex justify-end border-t border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
                 <button
                     type="button"
                     onClick={handleImport}

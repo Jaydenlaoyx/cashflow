@@ -195,7 +195,7 @@ export default async function SettingsPage({
       {success ? (
         <div
           role="status"
-          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
         >
           Settings updated successfully.
         </div>
@@ -204,39 +204,39 @@ export default async function SettingsPage({
       {errorMessage ? (
         <div
           role="alert"
-          className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          className="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300"
         >
           {errorMessage}
         </div>
       ) : null}
 
       <div>
-        <p className="text-sm font-medium text-emerald-700">
+        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
           Preferences
         </p>
 
-        <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
           Account settings
         </h2>
 
-        <p className="mt-2 text-sm text-slate-500">
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
           Manage your financial accounts and display preferences.
         </p>
       </div>
 
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
-        <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <article className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-6 shadow-sm">
           <div className="flex items-start gap-3">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
               <Settings className="size-5" />
             </div>
 
             <div>
-              <h3 className="font-semibold text-slate-950">
+              <h3 className="font-semibold text-slate-950 dark:text-white">
                 Display preferences
               </h3>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 Choose how financial amounts are displayed.
               </p>
             </div>
@@ -245,7 +245,7 @@ export default async function SettingsPage({
           <form action={updateCurrency} className="mt-6">
             <label
               htmlFor="currencyCode"
-              className="text-sm font-medium text-slate-700"
+              className="text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Primary currency
             </label>
@@ -254,7 +254,7 @@ export default async function SettingsPage({
               id="currencyCode"
               name="currencyCode"
               defaultValue={currencyCode}
-              className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+              className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white px-3 text-sm outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
             >
               {currencies.map((currency) => (
                 <option
@@ -266,7 +266,7 @@ export default async function SettingsPage({
               ))}
             </select>
 
-            <p className="mt-2 text-xs leading-5 text-amber-700">
+            <p className="mt-2 text-xs leading-5 text-amber-700 dark:text-amber-300">
               Changing currency changes display formatting only. It
               does not convert existing amounts using exchange rates.
             </p>
@@ -280,8 +280,8 @@ export default async function SettingsPage({
           </form>
         </article>
 
-        <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h3 className="font-semibold text-slate-950">
+        <article className="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-6 shadow-sm">
+          <h3 className="font-semibold text-slate-950 dark:text-white">
             Add financial account
           </h3>
 
@@ -289,7 +289,7 @@ export default async function SettingsPage({
             <div>
               <label
                 htmlFor="accountName"
-                className="text-sm font-medium text-slate-700"
+                className="text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Account name
               </label>
@@ -300,14 +300,14 @@ export default async function SettingsPage({
                 required
                 maxLength={80}
                 placeholder="Savings account"
-                className="mt-2 h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+                className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500"
               />
             </div>
 
             <div>
               <label
                 htmlFor="accountType"
-                className="text-sm font-medium text-slate-700"
+                className="text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Account type
               </label>
@@ -316,7 +316,7 @@ export default async function SettingsPage({
                 id="accountType"
                 name="type"
                 defaultValue="savings"
-                className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+                className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white px-3 text-sm outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
               >
                 {Object.entries(accountTypeLabels).map(
                   ([value, label]) => (
@@ -331,7 +331,7 @@ export default async function SettingsPage({
             <div>
               <label
                 htmlFor="startingBalance"
-                className="text-sm font-medium text-slate-700"
+                className="text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Starting balance
               </label>
@@ -343,7 +343,7 @@ export default async function SettingsPage({
                 step="0.01"
                 required
                 defaultValue="0"
-                className="mt-2 h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+                className="mt-2 h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-950 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
               />
             </div>
 
@@ -352,15 +352,15 @@ export default async function SettingsPage({
                 name="includeInTotal"
                 type="checkbox"
                 defaultChecked
-                className="mt-1 size-4 rounded border-slate-300 text-emerald-600"
+                className="mt-1 size-4 rounded border-slate-300 text-emerald-600 dark:border-slate-600 dark:bg-slate-950"
               />
 
               <span>
-                <span className="block text-sm font-medium text-slate-700">
+                <span className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                   Include in current balance
                 </span>
 
-                <span className="block text-xs leading-5 text-slate-500">
+                <span className="block text-xs leading-5 text-slate-500 dark:text-slate-400">
                   Include this account in dashboard totals.
                 </span>
               </span>
@@ -377,12 +377,12 @@ export default async function SettingsPage({
         </article>
       </div>
 
-      <article className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h3 className="font-semibold text-slate-950">
+      <article className="mt-6 rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-6 shadow-sm">
+        <h3 className="font-semibold text-slate-950 dark:text-white">
           Your accounts
         </h3>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Archived accounts retain their historical transactions.
         </p>
 
@@ -392,28 +392,28 @@ export default async function SettingsPage({
               key={account.id}
               className={`flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-center ${
                 account.is_archived
-                  ? "border-slate-200 bg-slate-50 opacity-70"
-                  : "border-slate-200"
+                  ? "border-slate-200 bg-slate-50 opacity-70 dark:border-slate-700 dark:bg-slate-800/60"
+                  : "border-slate-200 dark:border-slate-700"
               }`}
             >
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                 <AccountIcon type={account.type} />
               </div>
 
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <p className="font-semibold text-slate-900">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">
                     {account.name}
                   </p>
 
                   {account.is_archived ? (
-                    <span className="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600">
+                    <span className="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-700 dark:text-slate-300">
                       Archived
                     </span>
                   ) : null}
                 </div>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                   {accountTypeLabels[account.type]}
                   {" · Starting balance "}
                   {formatCurrency(
@@ -434,7 +434,7 @@ export default async function SettingsPage({
                   >
                     <button
                       type="submit"
-                      className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                      className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                     >
                       {account.include_in_total ? (
                         <Eye className="size-4" />
@@ -458,7 +458,7 @@ export default async function SettingsPage({
                 >
                   <button
                     type="submit"
-                    className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                   >
                     {account.is_archived ? (
                       <RotateCcw className="size-4" />
@@ -488,19 +488,19 @@ export default async function SettingsPage({
         }))}
       />
 
-      <article className="mt-6 rounded-2xl border border-rose-200 bg-white p-6 shadow-sm">
-        <h3 className="font-semibold text-slate-950">
+      <article className="mt-6 rounded-2xl border border-rose-200 bg-white p-6 shadow-sm dark:border-rose-900 dark:bg-slate-900">
+        <h3 className="font-semibold text-slate-950 dark:text-white">
           Log out
         </h3>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           End your CashFlow session on this device.
         </p>
 
         <form action={signOut}>
           <button
             type="submit"
-            className="mt-5 flex h-10 items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 text-sm font-semibold text-rose-700 hover:bg-rose-100"
+            className="mt-5 flex h-10 items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300 dark:hover:bg-rose-950"
           >
             <LogOut className="size-4" />
             Log out

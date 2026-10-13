@@ -41,8 +41,8 @@ export function IncomeExpenseChart({
 
   if (!hasActivity) {
     return (
-      <div className="flex h-80 items-center justify-center rounded-xl bg-slate-50">
-        <p className="text-sm text-slate-500">
+      <div className="flex h-80 items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/60">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           No financial activity during this period.
         </p>
       </div>
@@ -62,7 +62,7 @@ export function IncomeExpenseChart({
           }}
         >
           <CartesianGrid
-            stroke="#E2E8F0"
+            stroke="var(--chart-grid)"
             strokeDasharray="4 4"
             vertical={false}
           />
@@ -72,7 +72,7 @@ export function IncomeExpenseChart({
             axisLine={false}
             tickLine={false}
             tick={{
-              fill: "#64748B",
+              fill: "var(--chart-text)",
               fontSize: 12,
             }}
             dy={8}
@@ -82,7 +82,7 @@ export function IncomeExpenseChart({
             axisLine={false}
             tickLine={false}
             tick={{
-              fill: "#64748B",
+              fill: "var(--chart-text)",
               fontSize: 12,
             }}
             tickFormatter={formatCompactAmount}
@@ -93,18 +93,30 @@ export function IncomeExpenseChart({
               formatCurrency(Number(value), currencyCode),
               name === "income" ? "Income" : "Expenses",
             ]}
+            cursor={{
+              fill: "var(--chart-grid)",
+              fillOpacity: 0.35,
+            }}
             contentStyle={{
+              backgroundColor: "var(--chart-tooltip-background)",
               borderRadius: "12px",
-              border: "1px solid #E2E8F0",
+              border: "1px solid var(--chart-tooltip-border)",
+              color: "var(--chart-text)",
               boxShadow:
-                "0 8px 24px rgba(15, 23, 42, 0.08)",
+                "0 8px 24px var(--chart-tooltip-shadow)",
+            }}
+            labelStyle={{
+              color: "var(--chart-text)",
+              fontWeight: 600,
             }}
           />
 
           <Legend
-            formatter={(value) =>
-              value === "income" ? "Income" : "Expenses"
-            }
+            formatter={(value) => (
+              <span style={{ color: "var(--chart-text)" }}>
+                {value === "income" ? "Income" : "Expenses"}
+              </span>
+            )}
           />
 
           <Bar

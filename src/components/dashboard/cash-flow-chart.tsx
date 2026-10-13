@@ -40,8 +40,8 @@ export function CashFlowChart({
 
   if (!hasActivity) {
     return (
-      <div className="flex h-72 items-center justify-center rounded-xl bg-slate-50">
-        <p className="text-sm text-slate-500">
+      <div className="flex h-72 items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/60">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Add transactions to see your cash-flow trend.
         </p>
       </div>
@@ -101,7 +101,7 @@ export function CashFlowChart({
           </defs>
 
           <CartesianGrid
-            stroke="#E2E8F0"
+            stroke="var(--chart-grid)"
             strokeDasharray="4 4"
             vertical={false}
           />
@@ -111,7 +111,7 @@ export function CashFlowChart({
             axisLine={false}
             tickLine={false}
             tick={{
-              fill: "#64748B",
+              fill: "var(--chart-text)",
               fontSize: 12,
             }}
             dy={10}
@@ -121,7 +121,7 @@ export function CashFlowChart({
             axisLine={false}
             tickLine={false}
             tick={{
-              fill: "#64748B",
+              fill: "var(--chart-text)",
               fontSize: 12,
             }}
             tickFormatter={formatCompactAmount}
@@ -132,10 +132,19 @@ export function CashFlowChart({
               formatCurrency(Number(value), currencyCode),
               name === "income" ? "Income" : "Expenses",
             ]}
+            cursor={{
+              stroke: "var(--chart-grid)",
+            }}
             contentStyle={{
+              backgroundColor: "var(--chart-tooltip-background)",
               borderRadius: "12px",
-              border: "1px solid #E2E8F0",
-              boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)",
+              border: "1px solid var(--chart-tooltip-border)",
+              color: "var(--chart-text)",
+              boxShadow: "0 8px 24px var(--chart-tooltip-shadow)",
+            }}
+            labelStyle={{
+              color: "var(--chart-text)",
+              fontWeight: 600,
             }}
           />
 
